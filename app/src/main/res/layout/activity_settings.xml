@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:paddingTop="16dp"
+    tools:context=".SettingsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="App Tracking" 
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/buttonSelectApps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Apps to Track"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Overall Daily Usage Threshold"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/editTextUsageThreshold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Alert if total tracked app usage exceeds (minutes)"
+        android:inputType="number"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonSaveThreshold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="Save Threshold"/>
+
+    <!-- Add more settings options here as needed -->
+
+</LinearLayout> 
