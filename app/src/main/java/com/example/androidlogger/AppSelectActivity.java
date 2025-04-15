@@ -50,24 +50,24 @@ public class AppSelectActivity extends AppCompatActivity {
         trackedApps = SettingsActivity.getTrackedApps(this);
         if (trackedApps == null) {
              Log.w(TAG, "Tracked apps set was null, initializing to empty set.");
-             trackedApps = new HashSet<>(); // Initialize if null
+             trackedApps = new HashSet<>(); 
         }
     }
 
     private void loadInstalledApps() {
         PackageManager pm = getPackageManager();
-        // Get a list of installed apps (excluding system apps potentially)
+        
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         appInfoList = new ArrayList<>();
 
         if (trackedApps == null) {
             Log.e(TAG, "Tracked apps set is null before processing packages.");
-            trackedApps = new HashSet<>(); // Defensive initialization
+            trackedApps = new HashSet<>(); 
         }
 
         for (ApplicationInfo packageInfo : packages) {
-            // Filter out system apps or apps without launch intents if desired
-            // if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { // Example: Exclude system apps
+            
+            
                 try {
                     String appName = packageInfo.loadLabel(pm).toString();
                     String packageName = packageInfo.packageName;
@@ -81,10 +81,10 @@ public class AppSelectActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.e(TAG, "Error loading info for package: " + packageInfo.packageName, e);
                 }
-            // }
+            
         }
 
-        // Sort apps alphabetically
+        
         Collections.sort(appInfoList, (o1, o2) -> o1.appName.compareToIgnoreCase(o2.appName));
     }
 } 

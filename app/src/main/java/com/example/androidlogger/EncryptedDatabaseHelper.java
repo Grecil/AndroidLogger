@@ -14,14 +14,14 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "logger.db";
     private static final int DATABASE_VERSION = 1;
 
-    // Define table and columns
+    
     public static final String TABLE_LOGS = "logs";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TIMESTAMP = "timestamp";
     public static final String COLUMN_EVENT_TYPE = "event_type";
     public static final String COLUMN_DATA = "data";
 
-    // SQL query to create the logs table
+    
     private static final String SQL_CREATE_LOGS_TABLE = 
         "CREATE TABLE " + TABLE_LOGS + " (" +
         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -45,13 +45,13 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion);
-        // Simple upgrade policy: drop old table and create new one
-        // Implement more sophisticated migration logic for production apps
+        
+        
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGS);
         onCreate(db);
     }
 
-    // WARNING: Hardcoding the password is insecure. Use Android Keystore for production.
+    
     private static final String DATABASE_PASSWORD = "YOUR_STRONG_PASSWORD";
 
     /**
@@ -66,12 +66,12 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = null;
         long newRowId = -1;
         try {
-            db = this.getWritableDatabase(DATABASE_PASSWORD); // Use the password here
+            db = this.getWritableDatabase(DATABASE_PASSWORD); 
             
             ContentValues values = new ContentValues();
             values.put(COLUMN_TIMESTAMP, timestamp);
             values.put(COLUMN_EVENT_TYPE, eventType);
-            values.put(COLUMN_DATA, data); // Data can be JSON string or other formats
+            values.put(COLUMN_DATA, data); 
 
             newRowId = db.insert(TABLE_LOGS, null, values);
             if (newRowId == -1) {
@@ -89,8 +89,8 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
         return newRowId;
     }
     
-    // Add methods for querying, updating, deleting logs as needed
-    // Remember to use getReadableDatabase(DATABASE_PASSWORD) or getWritableDatabase(DATABASE_PASSWORD)
+    
+    
 
     /**
      * Queries the number of screen unlock events for a specific day.
@@ -108,7 +108,7 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
             db = this.getReadableDatabase(DATABASE_PASSWORD);
 
             Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month - 1, day, 0, 0, 0); // Month is 0-based
+            calendar.set(year, month - 1, day, 0, 0, 0); 
             calendar.set(Calendar.MILLISECOND, 0);
             long startTime = calendar.getTimeInMillis();
 
@@ -123,14 +123,14 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
 
             cursor = db.query(
                     TABLE_LOGS,
-                    new String[]{"COUNT(" + COLUMN_ID + ")"}, // Select count(*)
+                    new String[]{"COUNT(" + COLUMN_ID + ")"}, 
                     selection,
                     selectionArgs,
                     null, null, null
             );
 
             if (cursor != null && cursor.moveToFirst()) {
-                count = cursor.getInt(0); // Get the count from the first column
+                count = cursor.getInt(0); 
             }
         } catch (Exception e) {
             Log.e(TAG, "Error querying screen unlocks for day", e);
@@ -162,7 +162,7 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
             db = this.getReadableDatabase(DATABASE_PASSWORD);
 
             Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month - 1, day, 0, 0, 0); // Month is 0-based
+            calendar.set(year, month - 1, day, 0, 0, 0); 
             calendar.set(Calendar.MILLISECOND, 0);
             long startTime = calendar.getTimeInMillis();
 
@@ -177,7 +177,7 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
 
             cursor = db.query(
                     TABLE_LOGS,
-                    new String[]{COLUMN_DATA}, // Select the data column
+                    new String[]{COLUMN_DATA}, 
                     selection,
                     selectionArgs,
                     null, null, null
@@ -188,10 +188,10 @@ public class EncryptedDatabaseHelper extends SQLiteOpenHelper {
                     String data = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATA));
                     if (data != null) {
                          try {
-                             // Data format: "package_name,duration_ms"
+                             
                              String[] parts = data.split(",");
                              if (parts.length == 2) {
-                                 totalTime += Long.parseLong(parts[1]); // Add the duration
+                                 totalTime += Long.parseLong(parts[1]); 
                              }
                          } catch (NumberFormatException e) {
                              Log.w(TAG, "Could not parse duration from data: " + data);

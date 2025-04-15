@@ -14,9 +14,9 @@ import java.util.Set;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    // Preference Keys
+    
     public static final String PREFS_NAME = "AppLoggerSettings";
-    public static final String KEY_TRACKED_APPS = "trackedAppsSet"; // New key for the set
+    public static final String KEY_TRACKED_APPS = "trackedAppsSet"; 
     public static final String KEY_USAGE_THRESHOLD_MINUTES = "usageThresholdMinutes";
 
     private SharedPreferences sharedPreferences;
@@ -40,14 +40,14 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void loadPreferences() {
-        // Load usage threshold (default to -1 or some indicator for not set)
+        
         int threshold = sharedPreferences.getInt(KEY_USAGE_THRESHOLD_MINUTES, -1);
         if (threshold > 0) {
             editTextUsageThreshold.setText(String.valueOf(threshold));
         } else {
-            editTextUsageThreshold.setText(""); // Clear if not set or invalid
+            editTextUsageThreshold.setText(""); 
         }
-        // Loading the tracked apps set happens in AppSelectActivity
+        
     }
 
     private void setupListeners() {
@@ -56,11 +56,11 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Save threshold when button is clicked
+        
         buttonSaveThreshold.setOnClickListener(v -> {
             String thresholdStr = editTextUsageThreshold.getText().toString();
             if (TextUtils.isEmpty(thresholdStr)) {
-                // Clear the preference if input is empty
+                
                 saveIntPreference(KEY_USAGE_THRESHOLD_MINUTES, -1); 
                 Toast.makeText(this, "Usage threshold cleared", Toast.LENGTH_SHORT).show();
             } else {
@@ -87,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    // --- Static helper methods for accessing preferences --- 
+    
 
     public static void saveTrackedApps(Context context, Set<String> trackedApps) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -96,15 +96,15 @@ public class SettingsActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    // Returns a mutable copy of the set
+    
     public static Set<String> getTrackedApps(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        // Return a new HashSet to prevent modification of the original preference object
+        
         return new HashSet<>(prefs.getStringSet(KEY_TRACKED_APPS, new HashSet<>())); 
     }
 
     public static int getUsageThresholdMinutes(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return prefs.getInt(KEY_USAGE_THRESHOLD_MINUTES, -1); // Default to -1 (no threshold)
+        return prefs.getInt(KEY_USAGE_THRESHOLD_MINUTES, -1); 
     }
 } 

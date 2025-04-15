@@ -44,9 +44,9 @@ public class AppSelectAdapter extends RecyclerView.Adapter<AppSelectAdapter.View
         holder.trackCheckBox.setChecked(appInfo.isTracked);
 
         holder.itemView.setOnClickListener(v -> {
-            appInfo.isTracked = !appInfo.isTracked; // Toggle state in the model
-            holder.trackCheckBox.setChecked(appInfo.isTracked); // Update checkbox UI
-            saveTrackedApps(); // Save changes to SharedPreferences
+            appInfo.isTracked = !appInfo.isTracked; 
+            holder.trackCheckBox.setChecked(appInfo.isTracked); 
+            saveTrackedApps(); 
         });
     }
 
@@ -56,7 +56,7 @@ public class AppSelectAdapter extends RecyclerView.Adapter<AppSelectAdapter.View
     }
 
     private void saveTrackedApps() {
-        Set<String> trackedPackages = SettingsActivity.getTrackedApps(context); // Get current set
+        Set<String> trackedPackages = SettingsActivity.getTrackedApps(context); 
         for (AppInfo appInfo : appList) {
             if (appInfo.isTracked) {
                 trackedPackages.add(appInfo.packageName);
@@ -64,7 +64,7 @@ public class AppSelectAdapter extends RecyclerView.Adapter<AppSelectAdapter.View
                 trackedPackages.remove(appInfo.packageName);
             }
         }
-        SettingsActivity.saveTrackedApps(context, trackedPackages); // Save updated set
+        SettingsActivity.saveTrackedApps(context, trackedPackages); 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

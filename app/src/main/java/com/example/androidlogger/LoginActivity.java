@@ -20,7 +20,7 @@ import java.util.Set;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    // WARNING: Hardcoded PIN is insecure! Use secure storage/hashing.
+    
     private static final String CORRECT_PIN = "123456";
     
 
@@ -55,11 +55,11 @@ public class LoginActivity extends AppCompatActivity {
     private void verifyPin() {
         String enteredPin = pinEditText.getText().toString();
         if (CORRECT_PIN.equals(enteredPin)) {
-            // PIN is correct
+            
             Log.d(TAG, "PIN Login successful");
             navigateToDashboard();
         } else {
-            // PIN is incorrect
+            
             Toast.makeText(this, "Incorrect PIN", Toast.LENGTH_SHORT).show();
             pinEditText.setError("Incorrect PIN");
         }
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
                 Log.w(TAG, "The user hasn't associated any biometric credentials with their account.");
-                // Optionally prompt user to enroll biometrics?
+                
                 biometricLoginButton.setVisibility(View.GONE); 
                 break;
              default:
@@ -131,21 +131,21 @@ public class LoginActivity extends AppCompatActivity {
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric Login")
                 .setSubtitle("Log in using your fingerprint or face")
-                // Allow device credentials (PIN/Pattern/Password) as fallback
+                
                 .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-                // Cannot call setNegativeButtonText() and setAllowedAuthenticators(...)
-                // Use .setNegativeButtonText("Cancel") if you only want BIOMETRIC_STRONG/WEAK
+                
+                
                 .build();
     }
 
     private void navigateToDashboard() {
-        // Clear PIN field for security
+        
         pinEditText.setText(""); 
-        // Navigate to the main part of the app - CHANGE THIS TO MainActivity
+        
         Intent intent = new Intent(LoginActivity.this, MainActivity.class); 
-        // Prevent going back to LoginActivity after successful login
+        
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); 
         startActivity(intent);
-        finish(); // Close LoginActivity
+        finish(); 
     }
 } 
